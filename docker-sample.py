@@ -29,7 +29,7 @@ def dockerFunc(abc):
 
     client = docker.from_env()
     print('starting docker container')
-    container = client.containers.run("centos", "/bin/bash -c 'hostname; sleep 600'", detach=True)
+    container = client.containers.run("centos:7", "/bin/bash -c 'hostname; sleep 600'", detach=True)
     for line in container.logs(stream=True):
         print(line.strip())
     return str(container.id)
