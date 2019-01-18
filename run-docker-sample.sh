@@ -1,13 +1,12 @@
 #!/bin/bash
 
-#spark-submit --master yarn-cluster --conf spark.shuffle.service.enabled=true --conf spark.dynamicAllocation.enabled=true --executor-memory 1g --driver-memory 1g docker.py
-#spark-submit --master yarn-cluster --num-executors 10 --executor-memory 1g --driver-memory 1g docker-sample.py
-
+# This job will run on spark2 with python 3
+# It can also be run on spark1 (python 2 will also work)
 
 export SPARK_MAJOR_VERSION=2
 export SPARK_HOME=/usr/hdp/current/spark2-client
 export PYSPARK_PYTHON="/usr/bin/python3.5"
-spark-submit --master yarn-client \
+spark-submit --master yarn --deploy-mode cluster \
 --executor-memory 1g \
 --driver-memory 1g \
 --conf spark.shuffle.service.enabled=true --conf spark.dynamicAllocation.enabled=true \
