@@ -22,7 +22,8 @@ def dockerFunc(f):
 
     client = docker.from_env()
     # Detach the container as it will be running in the background.
-    container = client.containers.run("centos:7", "/bin/bash -c 'hostname; echo " + str(f) + "; sleep 5;'", detach=True)
+    container = client.containers.run("centos:7", "/bin/bash -c 'hostname; echo " + str(f) + "; sleep 5;'",
+                                      detach=True, remove=True)
     # This will attach to the docker log output and will log this in the Spark executor logs
     for line in container.logs(stream=True):
         print(line.strip())
@@ -35,4 +36,3 @@ if __name__ == '__main__':
         sc.parallelize(range(1,5)).foreach(lambda f : dockerFunc(f))
     finally:
         sc.stop()
-
